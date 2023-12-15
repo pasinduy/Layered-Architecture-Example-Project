@@ -1,6 +1,7 @@
-package com.example.layeredarchitecture.dao;
+package com.example.layeredarchitecture.dao.Impl;
 
-import com.example.layeredarchitecture.dao.ItemDAOImpl;
+import com.example.layeredarchitecture.dao.Impl.ItemDAOImpl;
+import com.example.layeredarchitecture.dao.PlaceOrderDAO;
 import com.example.layeredarchitecture.db.DBConnection;
 import com.example.layeredarchitecture.model.ItemDTO;
 import com.example.layeredarchitecture.model.OrderDetailDTO;
@@ -9,7 +10,7 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.util.List;
 
-public class PlaceOrderDAOImpl implements PlaceOrderDAO{
+public class PlaceOrderDAOImpl implements PlaceOrderDAO {
     @Override
     public String generateOrderID() throws SQLException, ClassNotFoundException {
         Connection connection = DBConnection.getDbConnection().getConnection();
