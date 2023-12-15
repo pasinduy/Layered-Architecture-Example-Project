@@ -3,9 +3,13 @@
 }
 
 .table-row-cell:selected{
-    -fx-background-color:linear-gradient(from 0% 0% to 100% 100%, white 0%, #007bff 50%, white 100%);
+    -fx-background-color:linear-gradient(from 0% 0% to 100% 100%, indianred 0%, #007bff 50%, indianred 100%);
 }
 
+#btnSave{
+    -fx-background-color: #54ec02;
+    -fx-text-fill: white;
+}
 .table-row-cell:selected .table-cell{
     -fx-text-fill: black !important;
 }
