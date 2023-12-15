@@ -26,6 +26,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+
+
 public class ManageCustomersFormController {
     public AnchorPane root;
     public TextField txtCustomerName;
@@ -35,6 +37,7 @@ public class ManageCustomersFormController {
     public TextField txtCustomerAddress;
     public TableView<CustomerTM> tblCustomers;
     public JFXButton btnAddNewCustomer;
+    public CustomerDAOImpl customerDAO;
 
     public void initialize() {
         tblCustomers.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -58,25 +61,21 @@ public class ManageCustomersFormController {
                 txtCustomerAddress.setDisable(false);
             }
         });
+
         txtCustomerAddress.setOnAction(event -> btnSave.fire());
         loadAllCustomers();
     }
 
     private void loadAllCustomers() {
         tblCustomers.getItems().clear();
-        /*Get all customers*/
         try {
+            /*Get all customers*/
             CustomerDAOImpl customerDAO = new CustomerDAOImpl();
             ArrayList<CustomerDTO> allCustomer = customerDAO.getAllCustomer();
 
-            for (CustomerDTO customerDTO : allCustomer){
-                tblCustomers.getItems().add(
-                        new CustomerTM(
-                                customerDTO.getId(),
-                                customerDTO.getName(),
-                                customerDTO.getAddress()
-                        )
-                );
+            for (CustomerDTO c : allCustomer) {
+                tblCustomers.getItems().
+                        add(new CustomerTM(c.getId(),c.getName(),c.getAddress()));
             }
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
@@ -122,6 +121,7 @@ public class ManageCustomersFormController {
         tblCustomers.getSelectionModel().clearSelection();
     }
 
+
     public void btnSave_OnAction(ActionEvent actionEvent) {
         String id = txtCustomerId.getText();
         String name = txtCustomerName.getText();
@@ -144,6 +144,8 @@ public class ManageCustomersFormController {
                     new Alert(Alert.AlertType.ERROR, id + " already exists").show();
                 }
 
+                CustomerDTO customerDTO = new CustomerDTO(id, name, address);
+                customerDAO.saveCustomer(customerDTO);
 
                 tblCustomers.getItems().add(new CustomerTM(id, name, address));
             } catch (SQLException e) {
@@ -157,24 +159,23 @@ public class ManageCustomersFormController {
                 if (!existCustomer(id)) {
                     new Alert(Alert.AlertType.ERROR, "There is no such customer associated with the id " + id).show();
                 }
-                Connection connection = DBConnection.getDbConnection().getConnection();
-                PreparedStatement pstm = connection.prepareStatement("UPDATE Customer SET name=?, address=? WHERE id=?");
-                pstm.setString(1, name);
-                pstm.setString(2, address);
-                pstm.setString(3, id);
-                pstm.executeUpdate();
+                CustomerDTO customerDTO = new CustomerDTO(id, name, address);
+                customerDAO.updateCustomer(customerDTO);
             } catch (SQLException e) {
                 new Alert(Alert.AlertType.ERROR, "Failed to update the customer " + id + e.getMessage()).show();
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
+
             CustomerTM selectedCustomer = tblCustomers.getSelectionModel().getSelectedItem();
             selectedCustomer.setName(name);
             selectedCustomer.setAddress(address);
             tblCustomers.refresh();
         }
+
         btnAddNewCustomer.fire();
     }
+
 
     boolean existCustomer(String id) throws SQLException, ClassNotFoundException {
         Connection connection = DBConnection.getDbConnection().getConnection();
@@ -183,6 +184,7 @@ public class ManageCustomersFormController {
         return pstm.executeQuery().next();
     }
 
+
     public void btnDelete_OnAction(ActionEvent actionEvent) {
         /*Delete Customer*/
         String id = tblCustomers.getSelectionModel().getSelectedItem().getId();
@@ -190,10 +192,9 @@ public class ManageCustomersFormController {
             if (!existCustomer(id)) {
                 new Alert(Alert.AlertType.ERROR, "There is no such customer associated with the id " + id).show();
             }
-            Connection connection = DBConnection.getDbConnection().getConnection();
-            PreparedStatement pstm = connection.prepareStatement("DELETE FROM Customer WHERE id=?");
-            pstm.setString(1, id);
-            pstm.executeUpdate();
+
+            CustomerDTO customerDTO = new CustomerDTO(id);
+            customerDAO.deleteCustomer(customerDTO);
 
             tblCustomers.getItems().remove(tblCustomers.getSelectionModel().getSelectedItem());
             tblCustomers.getSelectionModel().clearSelection();
@@ -205,6 +206,7 @@ public class ManageCustomersFormController {
             e.printStackTrace();
         }
     }
+
     private String generateNewId() {
         try {
             Connection connection = DBConnection.getDbConnection().getConnection();
@@ -222,6 +224,7 @@ public class ManageCustomersFormController {
             e.printStackTrace();
         }
 
+
         if (tblCustomers.getItems().isEmpty()) {
             return "C00-001";
         } else {
@@ -229,10 +232,13 @@ public class ManageCustomersFormController {
             int newCustomerId = Integer.parseInt(id.replace("C", "")) + 1;
             return String.format("C00-%03d", newCustomerId);
         }
+
     }
+
     private String getLastCustomerId() {
         List<CustomerTM> tempCustomersList = new ArrayList<>(tblCustomers.getItems());
         Collections.sort(tempCustomersList);
         return tempCustomersList.get(tempCustomersList.size() - 1).getId();
     }
+
 }

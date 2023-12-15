@@ -9,7 +9,7 @@ public class ItemDTO implements Serializable {
     private BigDecimal unitPrice;
     private int qtyOnHand;
 
-    public ItemDTO() {
+    public ItemDTO(String code) {
     }
 
     public ItemDTO(String code, String description, BigDecimal unitPrice, int qtyOnHand) {
