@@ -7,7 +7,7 @@
 }
 
 #btnSave{
-    -fx-background-color: #54ec02;
+    -fx-background-color: #5dbd38;
     -fx-text-fill: white;
 }
 .table-row-cell:selected .table-cell{
