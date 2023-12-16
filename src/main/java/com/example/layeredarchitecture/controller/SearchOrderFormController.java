@@ -1,5 +1,6 @@
 package com.example.layeredarchitecture.controller;
 
+import com.jfoenix.controls.JFXComboBox;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,6 +14,7 @@ import java.net.URL;
 
 public class SearchOrderFormController {
     public AnchorPane root;
+    public JFXComboBox cmbCustomerId;
 
     public void navigateToHome(MouseEvent mouseEvent) throws IOException {
         URL resource = this.getClass().getResource("/com/example/layeredarchitecture/main-form.fxml");
