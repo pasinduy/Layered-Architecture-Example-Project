@@ -37,7 +37,7 @@ public class ManageItemsFormController {
     public TableView<ItemTM> tblItems;
     public TextField txtUnitPrice;
     public JFXButton btnAddNewItem;
-    private ItemDAO itemDAO;
+    private ItemDAO itemDAO = new ItemDAOImpl();
 
     public void initialize() {
         tblItems.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("code"));
@@ -74,7 +74,7 @@ public class ManageItemsFormController {
         try {
             /*Get all items*/
             ItemDAOImpl itemDAO = new ItemDAOImpl();
-            ArrayList<ItemDTO> allItem = itemDAO.getAllItem();
+            ArrayList<ItemDTO> allItem = itemDAO.getAll();
 
             for (ItemDTO itemDTO : allItem){
                 tblItems.getItems().add(
@@ -142,7 +142,7 @@ public class ManageItemsFormController {
                 new Alert(Alert.AlertType.ERROR, "There is no such item associated with the id " + code).show();
             }
             ItemDTO itemDTO = new ItemDTO(code);
-            itemDAO.deleteItem(itemDTO);
+            itemDAO.delete(itemDTO);
 
             tblItems.getItems().remove(tblItems.getSelectionModel().getSelectedItem());
             tblItems.getSelectionModel().clearSelection();
@@ -183,7 +183,7 @@ public class ManageItemsFormController {
                 }
                 //Save Item
                 ItemDTO itemDTO = new ItemDTO(code, description, unitPrice, qtyOnHand);
-                itemDAO.addItem(itemDTO);
+                itemDAO.save(itemDTO);
                 tblItems.getItems().add(new ItemTM(code, description, unitPrice, qtyOnHand));
 
             } catch (SQLException e) {
@@ -198,7 +198,7 @@ public class ManageItemsFormController {
                 }
                 /*Update Item*/
                 ItemDTO itemDTO = new ItemDTO(code, description, unitPrice, qtyOnHand);
-                itemDAO.updateItem(itemDTO);
+                itemDAO.update(itemDTO);
                 tblItems.getItems().add(new ItemTM(code, description, unitPrice, qtyOnHand));
 
                 ItemTM selectedItem = tblItems.getSelectionModel().getSelectedItem();

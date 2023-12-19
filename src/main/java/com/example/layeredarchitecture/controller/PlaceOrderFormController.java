@@ -104,7 +104,7 @@ public class PlaceOrderFormController {
                     /*Search Customer*/
                     Connection connection = DBConnection.getDbConnection().getConnection();
                     try {
-                        if (!customerDAO.existCustomer(newValue + "")) {
+                        if (!customerDAO.existRecord(newValue + "")) {
 //                            "There is no such customer associated with the id " + id
                             new Alert(Alert.AlertType.ERROR, "There is no such customer associated with the id " + newValue + "").show();
                         }
@@ -139,7 +139,7 @@ public class PlaceOrderFormController {
 
                 /*Find Item*/
                 try {
-                    if (!itemDAO.existItem(newItemCode + "")) {
+                    if (!itemDAO.existRecord(newItemCode + "")) {
 //                        throw new NotFoundException("There is no such item associated with the id " + code);
                     }
                     Connection connection = DBConnection.getDbConnection().getConnection();
@@ -221,7 +221,7 @@ public class PlaceOrderFormController {
 //            Connection connection = DBConnection.getDbConnection().getConnection();
 //            Statement stm = connection.createStatement();
 //            ResultSet rst = stm.executeQuery("SELECT * FROM Customer");
-            ArrayList<String > list = customerDAO.loadCustomerIds();
+            ArrayList<String > list = customerDAO.load();
             for (String a: list) {
                 cmbCustomerId.getItems().add(a);
             }
@@ -234,7 +234,7 @@ public class PlaceOrderFormController {
 
     private void loadAllItemCodes() {
         try {
-            ArrayList<String> list = itemDAO.getItemIds();
+            ArrayList<String> list = itemDAO.load();
             for (String id: list) {
                 cmbItemCode.getItems().add(id);
             }
@@ -334,7 +334,7 @@ public class PlaceOrderFormController {
         /*Transaction*/
         try {
             //Check order id already exist or not
-            boolean b1 = orderDAO.existsOrder(orderId);
+            boolean b1 = orderDAO.existRecord(orderId);
             /*if order id already exist*/
             if (b1) {
                 return false;
@@ -343,7 +343,7 @@ public class PlaceOrderFormController {
             TransactionUtil.setAutoCommit(false);
 
             //Save the Order to the order table
-            boolean b2 = orderDAO.saveOrder(new OrderDTO(orderId, orderDate, customerId));
+            boolean b2 = orderDAO.save(new OrderDTO(orderId, orderDate, customerId));
 
             if (!b2) {
                 TransactionUtil.rollback();
@@ -354,7 +354,7 @@ public class PlaceOrderFormController {
             // add data to the Order Details table
 
             for (OrderDetailDTO detail : orderDetails) {
-                boolean b3 = orderDetailDAO.saveOrderDetails(detail);
+                boolean b3 = orderDetailDAO.save(detail);
                 if (!b3) {
                     TransactionUtil.rollback();
                     TransactionUtil.setAutoCommit(true);
@@ -366,7 +366,7 @@ public class PlaceOrderFormController {
                 item.setQtyOnHand(item.getQtyOnHand() - detail.getQty());
 
                 //update item
-                boolean b = itemDAO.updateItem(new ItemDTO(item.getCode(), item.getDescription(), item.getUnitPrice(), item.getQtyOnHand()));
+                boolean b = itemDAO.update(new ItemDTO(item.getCode(), item.getDescription(), item.getUnitPrice(), item.getQtyOnHand()));
 
                 if (!b) {
                     TransactionUtil.rollback();

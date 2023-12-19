@@ -72,7 +72,7 @@ public class ManageCustomersFormController {
         try {
             /*Get all customers*/
             CustomerDAOImpl customerDAO = new CustomerDAOImpl();
-            ArrayList<CustomerDTO> allCustomer = customerDAO.getAllCustomer();
+            ArrayList<CustomerDTO> allCustomer = customerDAO.getAll();
 
             for (CustomerDTO c : allCustomer) {
                 tblCustomers.getItems().
@@ -146,7 +146,7 @@ public class ManageCustomersFormController {
                 }
 
                 CustomerDTO customerDTO = new CustomerDTO(id, name, address);
-                customerDAO.saveCustomer(customerDTO);
+                customerDAO.save(customerDTO);
 
                 tblCustomers.getItems().add(new CustomerTM(id, name, address));
             } catch (SQLException e) {
@@ -161,7 +161,7 @@ public class ManageCustomersFormController {
                     new Alert(Alert.AlertType.ERROR, "There is no such customer associated with the id " + id).show();
                 }
                 CustomerDTO customerDTO = new CustomerDTO(id, name, address);
-                customerDAO.updateCustomer(customerDTO);
+                customerDAO.update(customerDTO);
             } catch (SQLException e) {
                 new Alert(Alert.AlertType.ERROR, "Failed to update the customer " + id + e.getMessage()).show();
             } catch (ClassNotFoundException e) {
@@ -195,7 +195,7 @@ public class ManageCustomersFormController {
             }
 
             CustomerDTO customerDTO = new CustomerDTO(id);
-            customerDAO.deleteCustomer(customerDTO);
+            customerDAO.delete(customerDTO);
 
             tblCustomers.getItems().remove(tblCustomers.getSelectionModel().getSelectedItem());
             tblCustomers.getSelectionModel().clearSelection();

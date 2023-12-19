@@ -1,7 +1,6 @@
 package com.example.layeredarchitecture.dao.Impl;
 
 import com.example.layeredarchitecture.dao.CustomerDAO;
-import com.example.layeredarchitecture.db.DBConnection;
 import com.example.layeredarchitecture.model.CustomerDTO;
 import com.example.layeredarchitecture.util.SQLUtil;
 
@@ -10,7 +9,7 @@ import java.util.ArrayList;
 
 public class CustomerDAOImpl implements CustomerDAO {
     @Override
-    public ArrayList<CustomerDTO> getAllCustomer() throws SQLException, ClassNotFoundException {
+    public ArrayList<CustomerDTO> getAll() throws SQLException, ClassNotFoundException {
         ResultSet rst = SQLUtil.test("SELECT * FROM Customer");
 
         ArrayList<CustomerDTO> getAllCustomer=new ArrayList<>();
@@ -25,26 +24,30 @@ public class CustomerDAOImpl implements CustomerDAO {
         }
         return getAllCustomer;
     }
+
     @Override
-    public boolean saveCustomer(CustomerDTO customerDTO) throws SQLException, ClassNotFoundException {
+    public boolean save(CustomerDTO customerDTO) throws SQLException, ClassNotFoundException {
         return SQLUtil.test("INSERT INTO Customer (id,name, address) VALUES (?,?,?)", customerDTO.getId(),customerDTO.getName(),customerDTO.getAddress());
     }
+
     @Override
-    public boolean updateCustomer(CustomerDTO customerDTO) throws SQLException, ClassNotFoundException {
+    public boolean update(CustomerDTO customerDTO) throws SQLException, ClassNotFoundException {
         return SQLUtil.test("UPDATE INTO Customer (id,name, address) VALUES (?,?,?)", customerDTO.getId(),customerDTO.getName(),customerDTO.getAddress());
     }
+
     @Override
-    public void deleteCustomer(CustomerDTO customerDTO) throws SQLException, ClassNotFoundException {
-        SQLUtil.test("DELETE FROM Customer WHERE id=?", customerDTO.getId());
+    public boolean delete(CustomerDTO customerDTO) throws SQLException, ClassNotFoundException {
+        return SQLUtil.test("DELETE FROM Customer WHERE id=?", customerDTO.getId());
     }
+
     @Override
-    public boolean existCustomer(String id) throws SQLException, ClassNotFoundException {
+    public boolean existRecord(String id) throws SQLException, ClassNotFoundException {
         ResultSet resultSet = SQLUtil.test("SELECT id FROM Customer WHERE id=?", id);
         return resultSet.next();
     }
-    @Override
-    public ArrayList<String> loadCustomerIds() throws SQLException, ClassNotFoundException {
 
+    @Override
+    public ArrayList<String> load() throws SQLException, ClassNotFoundException {
         ResultSet rst = SQLUtil.test("SELECT * FROM Customer");
         ArrayList<String > list =  new ArrayList<>();
         while (rst.next()){
