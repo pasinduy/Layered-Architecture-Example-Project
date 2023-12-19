@@ -33,14 +33,14 @@ public class CustomerDAOImpl implements CustomerDAO {
     public boolean updateCustomer(CustomerDTO customerDTO) throws SQLException, ClassNotFoundException {
         return SQLUtil.test("UPDATE INTO Customer (id,name, address) VALUES (?,?,?)", customerDTO.getId(),customerDTO.getName(),customerDTO.getAddress());
     }
-
-    @Override
-    public boolean existCustomer(String id) throws SQLException, ClassNotFoundException {
-        return SQLUtil.test("SELECT id FROM Customer WHERE id=?", id);
-    }
     @Override
     public void deleteCustomer(CustomerDTO customerDTO) throws SQLException, ClassNotFoundException {
         SQLUtil.test("DELETE FROM Customer WHERE id=?", customerDTO.getId());
+    }
+    @Override
+    public boolean existCustomer(String id) throws SQLException, ClassNotFoundException {
+        ResultSet resultSet = SQLUtil.test("SELECT id FROM Customer WHERE id=?", id);
+        return resultSet.next();
     }
     @Override
     public ArrayList<String> loadCustomerIds() throws SQLException, ClassNotFoundException {

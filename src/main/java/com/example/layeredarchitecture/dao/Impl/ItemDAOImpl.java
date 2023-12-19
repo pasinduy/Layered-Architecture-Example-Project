@@ -55,12 +55,13 @@ public class ItemDAOImpl implements ItemDAO {
         return new ItemDTO(code, rst.getString("description"), rst.getBigDecimal("unitPrice"), rst.getInt("qtyOnHand"));
     }
     @Override
-    public boolean existItem(String code) throws SQLException, ClassNotFoundException {
-        return SQLUtil.test("SELECT code FROM Item WHERE code=?", code);
-    }
-    @Override
     public PreparedStatement UpdateOrder(Connection connection, ItemDTO item) throws SQLException, ClassNotFoundException {
         return SQLUtil.test("UPDATE Item SET description=?, unitPrice=?, qtyOnHand=? WHERE code=?", item.getDescription(), item.getUnitPrice(), item.getQtyOnHand(),item.getCode());
+    }
+    @Override
+    public boolean existItem(String code) throws SQLException, ClassNotFoundException {
+        ResultSet resultSet = SQLUtil.test("SELECT code FROM Item WHERE code=?", code);
+        return resultSet.next();
     }
 
     @Override

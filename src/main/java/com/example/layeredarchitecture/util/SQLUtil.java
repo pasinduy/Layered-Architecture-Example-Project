@@ -12,7 +12,7 @@ public class SQLUtil {
         PreparedStatement pstm = connection.prepareStatement(sql);
 
         for (int i = 0; i < objects.length; i++) {
-            pstm.setString(i, (String) objects[i]);
+            pstm.setString(i+1, (String) objects[i]);
         }
 
         if (sql.startsWith("SELECT")){
