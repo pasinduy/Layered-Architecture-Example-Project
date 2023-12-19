@@ -20,4 +20,8 @@ public interface ItemDAO {
     public ItemDTO getItemData( String code) throws SQLException, ClassNotFoundException;
 
     public boolean existItem(String code) throws SQLException, ClassNotFoundException;
+
+    PreparedStatement UpdateOrder(Connection connection, ItemDTO item) throws SQLException, ClassNotFoundException;
+
+    boolean update(ItemDTO itemDTO);
 }
