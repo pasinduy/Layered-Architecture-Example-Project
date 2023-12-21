@@ -1,6 +1,6 @@
-package com.example.layeredarchitecture.dao.Impl;
+package com.example.layeredarchitecture.dao.custom.Impl;
 
-import com.example.layeredarchitecture.dao.CustomerDAO;
+import com.example.layeredarchitecture.dao.custom.CustomerDAO;
 import com.example.layeredarchitecture.model.CustomerDTO;
 import com.example.layeredarchitecture.util.SQLUtil;
 
