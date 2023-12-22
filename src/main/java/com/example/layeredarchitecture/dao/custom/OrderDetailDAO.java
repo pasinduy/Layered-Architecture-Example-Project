@@ -10,5 +10,5 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface OrderDetailDAO extends CrudDAO<OrderDetailDTO> {
-    /*boolean saveOrderDetails(OrderDetailDTO detail) throws SQLException, ClassNotFoundException;*/
+
 }

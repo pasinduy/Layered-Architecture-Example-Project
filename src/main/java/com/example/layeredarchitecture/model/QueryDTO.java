@@ -1,6 +1,6 @@
-package com.example.layeredarchitecture.view.tdm;
+package com.example.layeredarchitecture.model;
 
-public class QueryTM {
+public class QueryDTO {
     private String oid;
     private String id;
     private String name;
@@ -29,7 +29,7 @@ public class QueryTM {
         this.name = name;
     }
 
-    public QueryTM(String oid, String id, String name) {
+    public QueryDTO(String oid, String id, String name) {
         this.oid = oid;
         this.id = id;
         this.name = name;

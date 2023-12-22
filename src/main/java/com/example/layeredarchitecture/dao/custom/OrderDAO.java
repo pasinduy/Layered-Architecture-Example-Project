@@ -13,9 +13,5 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface OrderDAO extends CrudDAO<OrderDTO> {
-    public String generateOrderID() throws SQLException, ClassNotFoundException;
-
-/*    boolean existsOrder(String orderId) throws SQLException, ClassNotFoundException;
-
-    boolean saveOrder(OrderDTO orderDTO) throws SQLException, ClassNotFoundException;*/
+    String generateOrderID() throws SQLException, ClassNotFoundException;
 }

@@ -2,6 +2,8 @@ package com.example.layeredarchitecture.controller;
 
 import com.example.layeredarchitecture.dao.custom.CustomerDAO;
 import com.example.layeredarchitecture.dao.custom.Impl.CustomerDAOImpl;
+import com.example.layeredarchitecture.dao.custom.Impl.QueryDAOImpl;
+import com.example.layeredarchitecture.dao.custom.QueryDAO;
 import com.jfoenix.controls.JFXComboBox;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -26,6 +28,7 @@ public class SearchOrderFormController {
     public TableColumn clmnCusName;
     public TableColumn clmnOrderID;
     CustomerDAO customerDAO = new CustomerDAOImpl();
+    QueryDAO queryDAO = new QueryDAOImpl();
 
     public void initialize(){
         loadAllCustomerIds();
