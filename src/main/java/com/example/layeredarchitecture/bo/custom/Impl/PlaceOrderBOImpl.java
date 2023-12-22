@@ -6,10 +6,11 @@ import com.example.layeredarchitecture.dao.custom.CustomerDAO;
 import com.example.layeredarchitecture.dao.custom.ItemDAO;
 import com.example.layeredarchitecture.dao.custom.OrderDAO;
 import com.example.layeredarchitecture.dao.custom.OrderDetailDAO;
-import com.example.layeredarchitecture.model.CustomerDTO;
-import com.example.layeredarchitecture.model.ItemDTO;
-import com.example.layeredarchitecture.model.OrderDTO;
-import com.example.layeredarchitecture.model.OrderDetailDTO;
+import com.example.layeredarchitecture.dto.CustomerDTO;
+import com.example.layeredarchitecture.dto.ItemDTO;
+import com.example.layeredarchitecture.dto.OrderDTO;
+import com.example.layeredarchitecture.dto.OrderDetailDTO;
+import com.example.layeredarchitecture.entity.Item;
 import com.example.layeredarchitecture.util.TransactionUtil;
 
 import java.sql.SQLException;
@@ -72,9 +73,9 @@ public class PlaceOrderBOImpl implements PlaceOrderBO {
             return true;
     }
     @Override
-    public ItemDTO findItem(String itemCode) {
+    public Item findItem(String itemCode) {
         try {
-            return itemDAO.getItemData(itemCode);
+            return itemDAO.search(itemCode);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {

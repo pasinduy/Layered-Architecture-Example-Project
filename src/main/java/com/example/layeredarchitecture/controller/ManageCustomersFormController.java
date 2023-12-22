@@ -2,10 +2,8 @@ package com.example.layeredarchitecture.controller;
 
 import com.example.layeredarchitecture.bo.BOFactory;
 import com.example.layeredarchitecture.bo.custom.CustomerBO;
-import com.example.layeredarchitecture.bo.custom.Impl.CustomerBOImpl;
-import com.example.layeredarchitecture.dao.custom.Impl.CustomerDAOImpl;
 import com.example.layeredarchitecture.db.DBConnection;
-import com.example.layeredarchitecture.model.CustomerDTO;
+import com.example.layeredarchitecture.dto.CustomerDTO;
 import com.example.layeredarchitecture.view.tdm.CustomerTM;
 import com.jfoenix.controls.JFXButton;
 import javafx.application.Platform;
@@ -179,10 +177,7 @@ public class ManageCustomersFormController {
 
 
     boolean existCustomer(String id) throws SQLException, ClassNotFoundException {
-        Connection connection = DBConnection.getDbConnection().getConnection();
-        PreparedStatement pstm = connection.prepareStatement("SELECT id FROM Customer WHERE id=?");
-        pstm.setString(1, id);
-        return pstm.executeQuery().next();
+        return bo.existRecord(id);
     }
 
 

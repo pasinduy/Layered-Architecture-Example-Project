@@ -1,14 +1,11 @@
 package com.example.layeredarchitecture.dao.custom.Impl;
 
 import com.example.layeredarchitecture.dao.custom.QueryDAO;
-import com.example.layeredarchitecture.db.DBConnection;
-import com.example.layeredarchitecture.model.QueryDTO;
+import com.example.layeredarchitecture.dto.QueryDTO;
 import com.example.layeredarchitecture.util.SQLUtil;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 
 public class QueryDAOImpl implements QueryDAO {

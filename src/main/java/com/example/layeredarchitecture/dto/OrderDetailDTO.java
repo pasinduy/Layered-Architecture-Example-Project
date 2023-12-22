@@ -1,40 +1,30 @@
-package com.example.layeredarchitecture.model;
+package com.example.layeredarchitecture.dto;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class CustomDTO {
-    private String id;
-    private String name;
+
+
+public class OrderDetailDTO implements Serializable {
     private String oid;
     private String itemCode;
     private int qty;
     private BigDecimal unitPrice;
-    public CustomDTO() {
+
+    public OrderDetailDTO() {
     }
 
-    public CustomDTO(String id, String name, String oid, String itemCode, int qty, BigDecimal unitPrice) {
-        this.id = id;
-        this.name = name;
-        this.oid = oid;
+    public OrderDetailDTO(String itemCode, int qty, BigDecimal unitPrice) {
         this.itemCode = itemCode;
         this.qty = qty;
         this.unitPrice = unitPrice;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public OrderDetailDTO(String oid, String itemCode, int qty, BigDecimal unitPrice) {
+        this.oid = oid;
+        this.itemCode = itemCode;
+        this.qty = qty;
+        this.unitPrice = unitPrice;
     }
 
     public String getOid() {
@@ -69,4 +59,12 @@ public class CustomDTO {
         this.unitPrice = unitPrice;
     }
 
+    @Override
+    public String toString() {
+        return "OrderDetailDTO{" +
+                "itemCode='" + itemCode + '\'' +
+                ", qty=" + qty +
+                ", unitPrice=" + unitPrice +
+                '}';
+    }
 }
