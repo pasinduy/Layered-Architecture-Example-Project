@@ -1,5 +1,6 @@
 package com.example.layeredarchitecture.bo;
 
+import com.example.layeredarchitecture.model.CustomerDTO;
 import com.example.layeredarchitecture.model.ItemDTO;
 import com.example.layeredarchitecture.model.OrderDetailDTO;
 
@@ -17,4 +18,5 @@ public interface PlaceOrderBO {
     ArrayList<String> loadCustomer() throws SQLException, ClassNotFoundException;
     ArrayList<String> loadItem() throws SQLException, ClassNotFoundException;
     String generateOrderID() throws SQLException, ClassNotFoundException;
+    CustomerDTO searchCustomer(String id)throws SQLException, ClassNotFoundException;
 }

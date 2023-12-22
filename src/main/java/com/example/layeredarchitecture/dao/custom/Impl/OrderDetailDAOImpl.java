@@ -37,4 +37,9 @@ public class OrderDetailDAOImpl implements OrderDetailDAO {
     public ArrayList<String> load() throws SQLException, ClassNotFoundException {
         return null;
     }
+
+    @Override
+    public OrderDetailDTO search(String id) throws SQLException, ClassNotFoundException {
+        return null;
+    }
 }

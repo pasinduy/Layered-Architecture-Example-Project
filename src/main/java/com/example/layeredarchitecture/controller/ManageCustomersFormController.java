@@ -1,5 +1,7 @@
 package com.example.layeredarchitecture.controller;
 
+import com.example.layeredarchitecture.bo.CustomerBO;
+import com.example.layeredarchitecture.bo.Impl.CustomerBOImpl;
 import com.example.layeredarchitecture.dao.custom.CustomerDAO;
 import com.example.layeredarchitecture.dao.custom.Impl.CustomerDAOImpl;
 import com.example.layeredarchitecture.db.DBConnection;
@@ -38,8 +40,7 @@ public class ManageCustomersFormController {
     public TextField txtCustomerAddress;
     public TableView<CustomerTM> tblCustomers;
     public JFXButton btnAddNewCustomer;
-    private CustomerDAO customerDAO = new CustomerDAOImpl();
-
+    CustomerBO bo = new CustomerBOImpl();
     public void initialize() {
         tblCustomers.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("id"));
         tblCustomers.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -146,7 +147,7 @@ public class ManageCustomersFormController {
                 }
 
                 CustomerDTO customerDTO = new CustomerDTO(id, name, address);
-                customerDAO.save(customerDTO);
+                bo.save(customerDTO);
 
                 tblCustomers.getItems().add(new CustomerTM(id, name, address));
             } catch (SQLException e) {
@@ -161,7 +162,7 @@ public class ManageCustomersFormController {
                     new Alert(Alert.AlertType.ERROR, "There is no such customer associated with the id " + id).show();
                 }
                 CustomerDTO customerDTO = new CustomerDTO(id, name, address);
-                customerDAO.update(customerDTO);
+                bo.update(customerDTO);
             } catch (SQLException e) {
                 new Alert(Alert.AlertType.ERROR, "Failed to update the customer " + id + e.getMessage()).show();
             } catch (ClassNotFoundException e) {
@@ -195,7 +196,7 @@ public class ManageCustomersFormController {
             }
 
             CustomerDTO customerDTO = new CustomerDTO(id);
-            customerDAO.delete(customerDTO);
+            bo.delete(customerDTO);
 
             tblCustomers.getItems().remove(tblCustomers.getSelectionModel().getSelectedItem());
             tblCustomers.getSelectionModel().clearSelection();

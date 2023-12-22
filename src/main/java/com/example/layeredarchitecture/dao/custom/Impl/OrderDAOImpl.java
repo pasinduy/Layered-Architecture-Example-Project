@@ -35,6 +35,11 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     @Override
+    public OrderDTO search(String id) throws SQLException, ClassNotFoundException {
+        return null;
+    }
+
+    @Override
     public boolean save(OrderDTO orderDTO) throws SQLException, ClassNotFoundException {
         return SQLUtil.test("INSERT INTO `Orders` (oid, date, customerID) VALUES (?,?,?)", orderDTO.getOrderId(), Date.valueOf(orderDTO.getOrderDate()), orderDTO.getCustomerId());
     }

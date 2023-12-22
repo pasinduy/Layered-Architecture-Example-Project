@@ -1,5 +1,6 @@
-package com.example.layeredarchitecture.bo;
+package com.example.layeredarchitecture.bo.Impl;
 
+import com.example.layeredarchitecture.bo.PlaceOrderBO;
 import com.example.layeredarchitecture.dao.custom.CustomerDAO;
 import com.example.layeredarchitecture.dao.custom.Impl.CustomerDAOImpl;
 import com.example.layeredarchitecture.dao.custom.Impl.ItemDAOImpl;
@@ -107,6 +108,11 @@ public class PlaceOrderBOImpl implements PlaceOrderBO {
     @Override
     public String generateOrderID() throws SQLException, ClassNotFoundException {
         return orderDAO.generateOrderID();
+    }
+
+    @Override
+    public CustomerDTO searchCustomer(String id) throws SQLException, ClassNotFoundException {
+        return customerDAO.search(id);
     }
 
 }
