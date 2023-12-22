@@ -57,6 +57,12 @@ public class SearchOrderFormController {
         }
     }
     public void btnSearchOnAction(ActionEvent actionEvent) {
-
+        try {
+            queryDAO.customerOrderDetails();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
