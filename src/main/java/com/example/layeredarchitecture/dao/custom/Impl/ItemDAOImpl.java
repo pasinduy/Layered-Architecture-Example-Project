@@ -69,6 +69,18 @@ public class ItemDAOImpl implements ItemDAO {
     }
 
     @Override
+    public String getNextID() throws SQLException, ClassNotFoundException {
+        ResultSet rst = SQLUtil.test("SELECT code FROM Item ORDER BY code DESC LIMIT 1;");
+        if (rst.next()) {
+            String id = rst.getString("code");
+            int newItemId = Integer.parseInt(id.replace("I00-", "")) + 1;
+            return String.format("I00-%03d", newItemId);
+        } else {
+            return "I00-001";
+        }
+    }
+
+    @Override
     public ItemDTO getItemData( String code) throws SQLException, ClassNotFoundException {
         ResultSet rst = SQLUtil.test("SELECT * FROM Item WHERE code=?", code);
 

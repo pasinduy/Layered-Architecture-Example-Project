@@ -42,4 +42,9 @@ public class OrderDetailDAOImpl implements OrderDetailDAO {
     public OrderDetailDTO search(String id) throws SQLException, ClassNotFoundException {
         return null;
     }
+
+    @Override
+    public String getNextID() throws SQLException, ClassNotFoundException {
+        return null;
+    }
 }
